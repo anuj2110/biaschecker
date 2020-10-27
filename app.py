@@ -45,7 +45,6 @@ elif option == "Try the bias checker":
     df=None
     multiple_files=None 
     multiple_files = st.file_uploader('Enter a csv file',type=["csv"])
-    st.write(multiple_files)
     try:
         df_=pd.read_csv(multiple_files)
         df =df_
