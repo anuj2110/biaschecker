@@ -65,5 +65,6 @@ elif option == "Try the bias checker":
             st.write('**The class distribution in the categorical columns is**')
             for p in percent:
                 st.dataframe(p,500,400)
+    os.remove("df")
         
 
