@@ -75,6 +75,8 @@ elif option == "Try the bias checker":
             os.remove("df")
             os.remove("bias")
             os.remove("percent")
+        multiple_files=None
         except Exception as e:
             pass
+
 
