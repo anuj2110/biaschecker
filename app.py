@@ -44,9 +44,11 @@ elif option == "Example":
 elif option == "Try the bias checker":
     df=None
     multiple_files = st.file_uploader('Enter a csv file',type=["csv"])
-    if multiple_files:
+    if multiple_files is not None:
         df_=pd.read_csv(multiple_files)
         df =df_
+    else:
+        pass
     if df is not None:
         st.dataframe(df.style.highlight_max(axis=0))
         try:
