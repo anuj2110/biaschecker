@@ -14,6 +14,31 @@ if option == "Instructions":
         1. Go to Try the bias checker option from the 
         2. Upload the csv you want to check bias for and wait for the results to be processed
     """)
+    
+    st.write("\n \n \n")
+
+    st.write("""
+    
+    
+        Thumb Rule while inputting a dataset to this module:  
+
+        The **Y** variable (the predicted variable) should be renamed as **‘y’** , in the dataset provided in order to iterate and procure the results. 
+        
+        **For example, if the predicted variable/output variable in the dataset is with the name ‘Job Status’ should be renamed as ‘y’**
+   
+    """)
+
+    st.write("\n \n \n")
+
+    st.write("""
+    ```
+        Programming Language used: Python  
+        Packages used:  NumPy, pandas, matplotlib, pickle, sklearn, streamlit  
+        Cloud Application Platform: Streamlit Share  
+        Hosting service: Git  
+        Others: Jupyter Notebook, Spyder
+    ```
+    """)    
 elif option == "Example":
     st.write("""
         ## Below is an example showing how the results will be displayed.
