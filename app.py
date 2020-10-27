@@ -44,6 +44,7 @@ elif option == "Example":
 elif option == "Try the bias checker":
     df=None
     multiple_files = st.file_uploader('Enter a csv file',type=["csv"])
+    print(multiple_files)
     if multiple_files is not None:
         df_=pd.read_csv(multiple_files)
         df =df_
