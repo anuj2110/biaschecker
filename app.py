@@ -11,8 +11,10 @@ option = st.sidebar.selectbox("Choose between following",["Instructions","Exampl
 if option == "Instructions":
     st.write("""
         ## You can use this tool in following manner
-        1. Go to Try the bias checker option from the 
-        2. Upload the csv you want to check bias for and wait for the results to be processed
+        1. Go to Try the bias checker option from the sidebar options
+        2. Upload the csv you want to check bias for and wait for the results to be processed and displayed.
+
+        Have a nice day 😊
     """)
     
     st.write("\n \n \n")
