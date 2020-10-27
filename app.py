@@ -43,6 +43,7 @@ elif option == "Example":
     os.remove("percent")
 elif option == "Try the bias checker":
     df=None
+    multiple_files=None 
     multiple_files = st.file_uploader('Enter a csv file',type=["csv"])
     st.write(multiple_files)
     if multiple_files is not None:
@@ -51,7 +52,6 @@ elif option == "Try the bias checker":
     else:
         pass
     if df is not None:
-        multiple_files=None
         st.dataframe(df.style.highlight_max(axis=0))
         try:
             with open("df","wb") as f:
