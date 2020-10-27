@@ -41,7 +41,6 @@ if option == "Instructions":
 elif option == "Try the bias checker":
     df=None
     multiple_files = st.file_uploader('Enter a csv file',type=["csv"])
-    df = None
     if multiple_files:
         df_=pd.read_csv(multiple_files)
         df =df_
@@ -66,5 +65,7 @@ elif option == "Try the bias checker":
             for p in percent:
                 st.dataframe(p,500,400)
     os.remove("df")
+    os.remove("bias")
+    os.remove("percent")
         
 
