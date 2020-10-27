@@ -10,6 +10,4 @@ scikit-learn>=0.18
 matplotlib>=1.4.3
 pandas>=0.19
 passlib==1.7.0
-SQLAlchemy==1.1.5
-gevent==1.2.1
 streamlit==0.69.2
