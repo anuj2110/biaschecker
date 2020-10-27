@@ -51,6 +51,7 @@ elif option == "Try the bias checker":
     else:
         pass
     if df is not None:
+        multiple_files=None
         st.dataframe(df.style.highlight_max(axis=0))
         try:
             with open("df","wb") as f:
@@ -75,7 +76,6 @@ elif option == "Try the bias checker":
             os.remove("df")
             os.remove("bias")
             os.remove("percent")
-        multiple_files=None
         except Exception as e:
             pass
 
