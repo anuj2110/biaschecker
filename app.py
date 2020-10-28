@@ -1,14 +1,22 @@
+'''
+Making the imports for the analytics and web app.
+'''
 import pandas as pd
 import numpy as np
 import streamlit as st
 import pickle
 from os import path
 import os
-st.title('Bias checker')
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn import preprocessing
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-option = st.sidebar.selectbox("Choose between following",["Instructions","Example","Try the bias checker"])
+st.title('Bias checker') # App starts here
 
-if option == "Instructions":
+option = st.sidebar.selectbox("Choose between following",["Instructions","Example","Try the bias checker"]) # * These are the options on the sidebar
+
+if option == "Instructions": # This will show the first page which shows instructions
     st.write("""
         ## You can use this tool in following manner
         1. Go to Try the bias checker option from the sidebar options
@@ -41,7 +49,7 @@ if option == "Instructions":
         Others: Jupyter Notebook, Spyder
     ```
     """)    
-elif option == "Example":
+elif option == "Example": # This will show the example
     st.write("""
         ## Below is an example showing how the results will be displayed.
     """)
@@ -68,16 +76,32 @@ elif option == "Example":
     os.remove("df")
     os.remove("bias")
     os.remove("percent")
-elif option == "Try the bias checker":
+elif option == "Try the bias checker":# This is the main page of the app
+    
+    st.write("""
+        **Note: Please keep the name of the target value as __y__ **
+
+    """)
     df=None
     multiple_files=None 
+
+    st.write("""
+        ### Please upload the csv file you want to check bias for. 
+    """)
+    
     multiple_files = st.file_uploader('Enter a csv file',type=["csv"])
+    
     try:
         df_=pd.read_csv(multiple_files)
         df =df_
     except Exception as e:
-        pass
+        st.write("""
+            Please provide a csv file
+        """)
+
     if df is not None:
+        label_encoder = preprocessing.LabelEncoder() 
+        df=df.apply(preprocessing.LabelEncoder().fit_transform)
         st.dataframe(df.style.highlight_max(axis=0))
         try:
             with open("df","wb") as f:
@@ -95,14 +119,56 @@ elif option == "Try the bias checker":
                 st.markdown('**The _bias_ exists in**')
                 for b in bias:
                     st.subheader(b)
-                st.write('**The class distribution in the categorical columns is**')
-                for p in percent:
-                    st.dataframe(p,500,400)
-            
+                    temp=type(df[b].iloc[0])
+                    if(temp!=str):
+                        st.write('Below is the distribution for this column')
+                        fig, ax = plt.subplots()
+                        ax.hist(df['age'],facecolor='green', alpha=0.5)
+                        st.pyplot(fig)
+                    else:
+                        st.write('*The class distribution in this columns*')
+                        for p in percent:
+                            st.dataframe(p,500,400)
+                        fig, ax = plt.subplots()
+                        ax.bar(df[b],facecolor='green', alpha=5,height=4)
+                        st.pyplot(fig)
+                        st.write('Bar plot of this column')
             os.remove("df")
             os.remove("bias")
             os.remove("percent")
+        
+            
         except Exception as e:
-            pass
+            st.write("""
+                    Sorry something went wrong on backend. Please retry again with correct inputs
+                """)
 
+        st.write("""
 
+                ### Below is the feature importances
+
+            """)
+        try:
+            y = df["y"].to_numpy()
+            collist = df.columns.tolist()
+            collist.remove("y")
+            x_ = df[collist]
+            x = df[collist].to_numpy()
+
+            model = ExtraTreesClassifier()
+            model.fit(x,y)
+
+            corrmat = df.corr()
+            top_corr_features = corrmat.index
+            sns.heatmap(df[top_corr_features].corr(),annot=True,cmap="RdYlGn")
+
+            feat_importances = pd.Series(model.feature_importances_, index=x_.columns)
+        
+            st.header("Feature Importnaces")
+            st.bar_chart(feat_importances)
+            
+           
+        except Exception as e:
+            st.write("""
+                    Sorry something went wrong on backend. Please retry again with correct inputs
+                """)  

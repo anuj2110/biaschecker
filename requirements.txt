@@ -11,3 +11,4 @@ matplotlib>=1.4.3
 pandas>=0.19
 passlib==1.7.0
 streamlit==0.69.2
+seaborn==0.10.1
