@@ -21,7 +21,6 @@ if option == "Instructions": # This will show the first page which shows instruc
         ## You can use this tool in following manner
         1. Go to Try the bias checker option from the sidebar options
         2. Upload the csv you want to check bias for and wait for the results to be processed and displayed.
-
         Have a nice day 😊
     """)
     
@@ -31,7 +30,6 @@ if option == "Instructions": # This will show the first page which shows instruc
     
     
         Thumb Rule while inputting a dataset to this module:  
-
         The **Y** variable (the predicted variable) should be renamed as **‘y’** , in the dataset provided in order to iterate and procure the results. 
         
         **For example, if the predicted variable/output variable in the dataset is with the name ‘Job Status’ should be renamed as ‘y’**
@@ -80,7 +78,6 @@ elif option == "Try the bias checker":# This is the main page of the app
     
     st.write("""
         **Note: Please keep the name of the target value as __y__ **
-
     """)
     df=None
     multiple_files=None 
@@ -100,8 +97,6 @@ elif option == "Try the bias checker":# This is the main page of the app
         """)
 
     if df is not None:
-        label_encoder = preprocessing.LabelEncoder() 
-        df=df.apply(preprocessing.LabelEncoder().fit_transform)
         st.dataframe(df.style.highlight_max(axis=0))
         try:
             with open("df","wb") as f:
@@ -129,8 +124,9 @@ elif option == "Try the bias checker":# This is the main page of the app
                         st.write('*The class distribution in this columns*')
                         for p in percent:
                             st.dataframe(p,500,400)
+                        cnt=df[b].value_counts().to_frame()
                         fig, ax = plt.subplots()
-                        ax.bar(df[b],facecolor='green', alpha=5,height=4)
+                        ax.bar(list(cnt.index),cnt['sex'],facecolor='green')
                         st.pyplot(fig)
                         st.write('Bar plot of this column')
             os.remove("df")
@@ -144,11 +140,12 @@ elif option == "Try the bias checker":# This is the main page of the app
                 """)
 
         st.write("""
-
                 ### Below is the feature importances
-
             """)
         try:
+            df=df.dropna()
+            label_encoder = preprocessing.LabelEncoder() 
+            df=df.apply(preprocessing.LabelEncoder().fit_transform)
             y = df["y"].to_numpy()
             collist = df.columns.tolist()
             collist.remove("y")
@@ -169,6 +166,4 @@ elif option == "Try the bias checker":# This is the main page of the app
             
            
         except Exception as e:
-            st.write("""
-                    Sorry something went wrong on backend. Please retry again with correct inputs
-                """)  
+            st.write(e)  
