@@ -206,7 +206,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                             if(temp!=str):
                                 st.write('Below is the distribution for this column')
                                 fig, ax = plt.subplots()
-                                ax.hist(df['age'],facecolor='green', alpha=0.5)
+                                ax.hist(df[b],facecolor='green', alpha=0.5)
                                 st.pyplot(fig)
                             else:
                                 cnt=df[b].value_counts().to_frame()
@@ -245,7 +245,7 @@ elif option == "Try the bias checker":# This is the main page of the app
 
                     feat_importances = pd.Series(model.feature_importances_, index=x_.columns)
                 
-                    st.header("Feature Importance")
+                    st.header(f"Feature Importance wrt '{text}' ")
                     st.bar_chart(feat_importances)
                     
                 
