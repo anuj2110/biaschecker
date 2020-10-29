@@ -34,7 +34,12 @@ if option == "Instructions": # This will show the first page which shows instruc
         Others: Jupyter Notebook, Spyder
     ```
     """)    
-elif option == "Example": # This will show the example
+elif option == "Example":
+ # This will show the example
+    st.write("""
+        ## Below is an demo video.
+    """)
+    st.video("streamlit-app-2020-10-29-15-10-89.webm")
     st.write("""
         ## Below is an example showing how the results will be displayed.
     """)
