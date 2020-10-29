@@ -87,6 +87,7 @@ elif option == "Example": # This will show the example
     os.remove("df")
     os.remove("bias")
     os.remove("percent")
+    st.write('''In this example we have taken a very famous example of titanic  ''')
 
     df=df.dropna()
     label_encoder = preprocessing.LabelEncoder() 
@@ -154,7 +155,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                                     st.dataframe(p,500,400)
                                 cnt=df[b].value_counts().to_frame()
                                 fig, ax = plt.subplots()
-                                ax.bar(list(cnt.index),cnt['sex'],facecolor='green')
+                                ax.bar(list(cnt.index),cnt[b],facecolor='green')
                                 st.pyplot(fig)
                                 st.write('Bar plot of this column')
                     os.remove("df")
