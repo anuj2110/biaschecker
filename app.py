@@ -87,7 +87,11 @@ elif option == "Example": # This will show the example
     os.remove("df")
     os.remove("bias")
     os.remove("percent")
-    st.write('''In this example we have taken a very famous example of titanic  ''')
+    st.write('''In this example we have taken a very famous example of titanic dataset.We can see
+    above that bias may be present in sex and age. The frequency distribution of sex columns is
+    heavily imbalance hence posing a potential bias towards male pessengers, hence the trend in male
+    pessengers might affect the overall trend of the model.Also in the age column the histogram 
+    seems to be a bit skewed which can be a reason of a potential bias.''')
 
     df=df.dropna()
     label_encoder = preprocessing.LabelEncoder() 
@@ -105,6 +109,15 @@ elif option == "Example": # This will show the example
 
     st.header("Feature Importance")
     st.bar_chart(feat_importances)
+    st.write(''' By the feature importance we intend to show the significance of different variables
+    and their effects on the target variable. A feature with greater importance like in this example sex,
+    age,fare e.t.c can affect the overall trend of the model. Now if there is a bias in very important 
+    columns such as age and sex then it can severely affect the model performance in comparison to bias
+    present in not so important features as they don't actually have much say in prediction. Hence the 
+    motive of showing feature importance is to check weather the potential biased columns are important 
+    for the model or not and according to that we can act to mitigate the bias.
+
+    ''')
 elif option == "Try the bias checker":# This is the main page of the app
     
     st.write("""
