@@ -38,7 +38,6 @@ elif option == "Example": # This will show the example
     st.write("""
         ## Below is an example showing how the results will be displayed.
     """)
-    
     df = pd.read_csv("train.csv")
     st.dataframe(df.style.highlight_max(axis=0))
     with open("df","wb") as f:
@@ -105,6 +104,62 @@ elif option == "Example": # This will show the example
     for the model or not and according to that we can act to mitigate the bias.
 
     ''')
+
+
+
+    df = pd.read_csv("bank-full.csv")
+    st.dataframe(df.style.highlight_max(axis=0))
+    with open("df","wb") as f:
+        pickle.dump(df,f)
+    os.system('python model.py')
+                    
+    with open("percent", "rb") as f:
+        percent= pickle.load(f)
+                    
+    with open("bias", "rb") as f:
+        bias = pickle.load(f)
+    if(len(bias)==0 or len(percent)==0):
+        st.markdown('**The dataset does not have any _bias_**')
+    else:
+        st.markdown('**The _bias_ exists in**')
+        for b in bias:
+            st.subheader(b)
+            temp=type(df[b].iloc[0])
+            if(temp!=str):
+                st.write('Below is the distribution for this column')
+                fig, ax = plt.subplots()
+                ax.hist(df[b],facecolor='green', alpha=0.5)
+                st.pyplot(fig)
+            else:
+                st.write('*The class distribution in this columns*')
+                for p in percent:
+                    st.dataframe(p,500,400)
+                cnt=df[b].value_counts().to_frame()
+                fig, ax = plt.subplots()
+                ax.bar(list(cnt.index),cnt[b],facecolor='green')
+                st.pyplot(fig)
+                st.write('Bar plot of this column')
+    os.remove("df")
+    os.remove("bias")
+    os.remove("percent")
+
+    df=df.dropna()
+    label_encoder = preprocessing.LabelEncoder() 
+    df=df.apply(preprocessing.LabelEncoder().fit_transform)
+    y = df["y"].to_numpy()
+    collist = df.columns.tolist()
+    collist.remove("y")
+    x_ = df[collist]
+    x = df[collist].to_numpy()
+
+    model = ExtraTreesClassifier()
+    model.fit(x,y)
+
+    feat_importances = pd.Series(model.feature_importances_, index=x_.columns)
+
+    st.header("Feature Importance")
+    st.bar_chart(feat_importances)
+
 elif option == "Try the bias checker":# This is the main page of the app
     
     
