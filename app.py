@@ -19,8 +19,8 @@ option = st.sidebar.selectbox("Choose between following",["Instructions","Exampl
 if option == "Instructions": # This will show the first page which shows instructions
     st.write("""
         ## You can use this tool in following manner
-        1. Go to Try the bias checker option from the sidebar options
-        2. Upload the csv you want to check bias for and wait for the results to be processed and displayed.
+        1. Go to **Try the bias checker** option from the sidebar options
+        2. **Upload the csv** you want to check bias for and wait for the results to be processed and displayed.
         Have a nice day 😊
     """)
     
@@ -89,8 +89,8 @@ elif option == "Example": # This will show the example
     os.remove("percent")
     st.write('''In this example we have taken a very famous example of titanic dataset.We can see
     above that bias may be present in sex and age. The frequency distribution of sex columns is
-    heavily imbalance hence posing a potential bias towards male pessengers, hence the trend in male
-    pessengers might affect the overall trend of the model.Also in the age column the histogram 
+    heavily imbalance hence posing a potential bias towards male passengers, hence the trend in male
+    passengers might affect the overall trend of the model.Also in the age column the histogram 
     seems to be a bit skewed which can be a reason of a potential bias.''')
 
     df=df.dropna()
