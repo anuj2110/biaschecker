@@ -150,14 +150,14 @@ elif option == "Try the bias checker":# This is the main page of the app
                                 ax.hist(df['age'],facecolor='green', alpha=0.5)
                                 st.pyplot(fig)
                             else:
-                                st.write('*The class distribution in this columns*')
-                                for p in percent:
-                                    st.dataframe(p,500,400)
                                 cnt=df[b].value_counts().to_frame()
                                 fig, ax = plt.subplots()
                                 ax.bar(list(cnt.index),cnt[b],facecolor='green')
                                 st.pyplot(fig)
                                 st.write('Bar plot of this column')
+                                           st.write('*The class distribution in this columns*')
+                        for p in percent:
+                            st.dataframe(p,500,400)
                     os.remove("df")
                     os.remove("bias")
                     os.remove("percent")
