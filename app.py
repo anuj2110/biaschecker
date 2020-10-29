@@ -155,7 +155,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                                 ax.bar(list(cnt.index),cnt[b],facecolor='green')
                                 st.pyplot(fig)
                                 st.write('Bar plot of this column')
-                                           st.write('*The class distribution in this columns*')
+                        st.write('*class distributions*')
                         for p in percent:
                             st.dataframe(p,500,400)
                     os.remove("df")
