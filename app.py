@@ -197,7 +197,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                     with open("bias", "rb") as f:
                         bias = pickle.load(f)
                     if(len(bias)==0 or len(percent)==0):
-                        st.markdown('**The dataset does not have any _bias_**')
+                        st.markdown('**We could not find any bias in the datset**')
                     else:
                         st.markdown('**The _bias_ exists in**')
                         for b in bias:
