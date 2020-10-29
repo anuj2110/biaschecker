@@ -23,19 +23,6 @@ if option == "Instructions": # This will show the first page which shows instruc
         2. **Upload the csv** you want to check bias for and wait for the results to be processed and displayed.
         Have a nice day 😊
     """)
-    
-    st.write("\n \n \n")
-
-    st.write("""
-    
-    
-        Thumb Rule while inputting a dataset to this module:  
-        The **Y** variable (the predicted variable) should be renamed as **‘y’** , in the dataset provided in order to iterate and procure the results. 
-        
-        **For example, if the predicted variable/output variable in the dataset is with the name ‘Job Status’ should be renamed as ‘y’**
-   
-    """)
-
     st.write("\n \n \n")
 
     st.write("""
