@@ -104,9 +104,11 @@ elif option == "Example": # This will show the example
     for the model or not and according to that we can act to mitigate the bias.
 
     ''')
+    st.write("\n\n\n")
 
-
-
+    st.write('''Here is another example with bank customers data. 
+    ''')
+    st.write("\n\n")
     df = pd.read_csv("bank.csv")
     st.dataframe(df.style.highlight_max(axis=0))
     with open("df","wb") as f:
