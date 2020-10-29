@@ -74,7 +74,7 @@ elif option == "Example": # This will show the example
                 if(temp!=str):
                     st.write('Below is the distribution for this column')
                     fig, ax = plt.subplots()
-                    ax.hist(df['age'],facecolor='green', alpha=0.5)
+                    ax.hist(df[b],facecolor='green', alpha=0.5)
                     st.pyplot(fig)
                 else:
                     st.write('*The class distribution in this columns*')
@@ -82,7 +82,7 @@ elif option == "Example": # This will show the example
                         st.dataframe(p,500,400)
                     cnt=df[b].value_counts().to_frame()
                     fig, ax = plt.subplots()
-                    ax.bar(list(cnt.index),cnt['sex'],facecolor='green')
+                    ax.bar(list(cnt.index),cnt[b],facecolor='green')
                     st.pyplot(fig)
                     st.write('Bar plot of this column')
         os.remove("df")
