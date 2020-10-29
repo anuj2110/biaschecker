@@ -22,7 +22,7 @@ corpus = ['Age','AGE', 'Gender','GENDER','disability','DISABILITY','marital','MA
           'board of education','higher secondary education','percentage','work exprience',
           'board of study','result','crime','victim sex','victim race','province',
           'african','american','CODE_GENDER','AMT_INCOME_TOTAL','NAME_INCOME_TYPE','NAME_EDUCATION_TYPE','NAME_FAMILY_STATUS','OCCUPATION_TYPE','Ethnicity','Language','LegalStatus',
-	 'MaritalStatus','Annual Income','sex','gender','age','ethnicity']
+	 'MaritalStatus','Annual Income','sex','gender','age','ethnicity','Sex']
 
 corpus = np.array(corpus)
 

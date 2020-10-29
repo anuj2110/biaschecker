@@ -51,36 +51,66 @@ elif option == "Example": # This will show the example
     st.write("""
         ## Below is an example showing how the results will be displayed.
     """)
-    df = pd.read_csv("student-mat.csv")
-    st.dataframe(df.style.highlight_max(axis=0))
-    with open("df","wb") as f:
-        pickle.dump(df,f)
-    os.system('python model.py')
-                    
-    with open("percent", "rb") as f:
-        percent= pickle.load(f)
-                    
-    with open("bias", "rb") as f:
-        bias = pickle.load(f)
-    if(len(bias)==0 or len(percent)==0):
-        st.markdown('**The dataset does not have any _bias_**')
-    else:
-        st.markdown('**The _bias_ exists in**')
-        for b in bias:
-            st.subheader(b)
-        st.write('**The class distribution in the categorical columns is**')
-        for p in percent:
-            st.dataframe(p,500,400)
-    os.remove("df")
-    os.remove("bias")
-    os.remove("percent")
+    text = st.text_input("Please provide name of target variable column")
+    if st.button("Submit"):
+        df = pd.read_csv("train.csv")
+        st.dataframe(df.style.highlight_max(axis=0))
+        with open("df","wb") as f:
+            pickle.dump(df,f)
+        os.system('python model.py')
+                        
+        with open("percent", "rb") as f:
+            percent= pickle.load(f)
+                        
+        with open("bias", "rb") as f:
+            bias = pickle.load(f)
+        if(len(bias)==0 or len(percent)==0):
+            st.markdown('**The dataset does not have any _bias_**')
+        else:
+            st.markdown('**The _bias_ exists in**')
+            for b in bias:
+                st.subheader(b)
+                temp=type(df[b].iloc[0])
+                if(temp!=str):
+                    st.write('Below is the distribution for this column')
+                    fig, ax = plt.subplots()
+                    ax.hist(df['age'],facecolor='green', alpha=0.5)
+                    st.pyplot(fig)
+                else:
+                    st.write('*The class distribution in this columns*')
+                    for p in percent:
+                        st.dataframe(p,500,400)
+                    cnt=df[b].value_counts().to_frame()
+                    fig, ax = plt.subplots()
+                    ax.bar(list(cnt.index),cnt['sex'],facecolor='green')
+                    st.pyplot(fig)
+                    st.write('Bar plot of this column')
+        os.remove("df")
+        os.remove("bias")
+        os.remove("percent")
+
+        df=df.dropna()
+        label_encoder = preprocessing.LabelEncoder() 
+        df=df.apply(preprocessing.LabelEncoder().fit_transform)
+        y = df[text].to_numpy()
+        collist = df.columns.tolist()
+        collist.remove(text)
+        x_ = df[collist]
+        x = df[collist].to_numpy()
+
+        model = ExtraTreesClassifier()
+        model.fit(x,y)
+
+        feat_importances = pd.Series(model.feature_importances_, index=x_.columns)
+
+        st.header("Feature Importnaces")
+        st.bar_chart(feat_importances)
 elif option == "Try the bias checker":# This is the main page of the app
     
     st.write("""
         **Note: Please keep the name of the target value as __y__ **
     """)
-    df=None
-    multiple_files=None 
+    
 
     st.write("""
         ### Please upload the csv file you want to check bias for. 
@@ -88,82 +118,83 @@ elif option == "Try the bias checker":# This is the main page of the app
     
     multiple_files = st.file_uploader('Enter a csv file',type=["csv"])
     
-    try:
-        df_=pd.read_csv(multiple_files)
-        df =df_
-    except Exception as e:
-        st.write("""
-            Please provide a csv file
-        """)
+    
 
-    if df is not None:
-        st.dataframe(df.style.highlight_max(axis=0))
-        try:
-            with open("df","wb") as f:
-                pickle.dump(df,f)
-            os.system('python model.py')
-                            
-            with open("percent", "rb") as f:
-                percent= pickle.load(f)
-                            
-            with open("bias", "rb") as f:
-                bias = pickle.load(f)
-            if(len(bias)==0 or len(percent)==0):
-                st.markdown('**The dataset does not have any _bias_**')
-            else:
-                st.markdown('**The _bias_ exists in**')
-                for b in bias:
-                    st.subheader(b)
-                    temp=type(df[b].iloc[0])
-                    if(temp!=str):
-                        st.write('Below is the distribution for this column')
-                        fig, ax = plt.subplots()
-                        ax.hist(df['age'],facecolor='green', alpha=0.5)
-                        st.pyplot(fig)
+    if multiple_files!=None:
+        text = st.text_input("Please provide name of target variable column")
+        if st.button("Submit"):
+            try:
+                df_=pd.read_csv(multiple_files)
+                df =df_
+                st.dataframe(df.style.highlight_max(axis=0))
+                try:
+                    with open("df","wb") as f:
+                        pickle.dump(df,f)
+                    os.system('python model.py')
+                                    
+                    with open("percent", "rb") as f:
+                        percent= pickle.load(f)
+                                    
+                    with open("bias", "rb") as f:
+                        bias = pickle.load(f)
+                    if(len(bias)==0 or len(percent)==0):
+                        st.markdown('**The dataset does not have any _bias_**')
                     else:
-                        st.write('*The class distribution in this columns*')
-                        for p in percent:
-                            st.dataframe(p,500,400)
-                        cnt=df[b].value_counts().to_frame()
-                        fig, ax = plt.subplots()
-                        ax.bar(list(cnt.index),cnt['sex'],facecolor='green')
-                        st.pyplot(fig)
-                        st.write('Bar plot of this column')
-            os.remove("df")
-            os.remove("bias")
-            os.remove("percent")
-        
-            
-        except Exception as e:
-            st.write("""
-                    Sorry something went wrong on backend. Please retry again with correct inputs
-                """)
+                        st.markdown('**The _bias_ exists in**')
+                        for b in bias:
+                            st.subheader(b)
+                            temp=type(df[b].iloc[0])
+                            if(temp!=str):
+                                st.write('Below is the distribution for this column')
+                                fig, ax = plt.subplots()
+                                ax.hist(df['age'],facecolor='green', alpha=0.5)
+                                st.pyplot(fig)
+                            else:
+                                st.write('*The class distribution in this columns*')
+                                for p in percent:
+                                    st.dataframe(p,500,400)
+                                cnt=df[b].value_counts().to_frame()
+                                fig, ax = plt.subplots()
+                                ax.bar(list(cnt.index),cnt['sex'],facecolor='green')
+                                st.pyplot(fig)
+                                st.write('Bar plot of this column')
+                    os.remove("df")
+                    os.remove("bias")
+                    os.remove("percent")
+                
+                    
+                except Exception as e:
+                    st.write("""
+                            Sorry something went wrong on backend. Please retry again with correct inputs
+                        """)
 
-        st.write("""
-                ### Below is the feature importances
-            """)
-        try:
-            df=df.dropna()
-            label_encoder = preprocessing.LabelEncoder() 
-            df=df.apply(preprocessing.LabelEncoder().fit_transform)
-            y = df["y"].to_numpy()
-            collist = df.columns.tolist()
-            collist.remove("y")
-            x_ = df[collist]
-            x = df[collist].to_numpy()
+                st.write("""
+                        ### Below is the feature importances
+                    """)
+                try:
+                    df=df.dropna()
+                    label_encoder = preprocessing.LabelEncoder() 
+                    df=df.apply(preprocessing.LabelEncoder().fit_transform)
+                    y = df[text].to_numpy()
+                    collist = df.columns.tolist()
+                    collist.remove(text)
+                    x_ = df[collist]
+                    x = df[collist].to_numpy()
 
-            model = ExtraTreesClassifier()
-            model.fit(x,y)
+                    model = ExtraTreesClassifier()
+                    model.fit(x,y)
 
-            corrmat = df.corr()
-            top_corr_features = corrmat.index
-            sns.heatmap(df[top_corr_features].corr(),annot=True,cmap="RdYlGn")
-
-            feat_importances = pd.Series(model.feature_importances_, index=x_.columns)
-        
-            st.header("Feature Importnaces")
-            st.bar_chart(feat_importances)
-            
-           
-        except Exception as e:
-            st.write(e)  
+                    feat_importances = pd.Series(model.feature_importances_, index=x_.columns)
+                
+                    st.header("Feature Importnaces")
+                    st.bar_chart(feat_importances)
+                    
+                
+                except Exception as e:
+                    st.write(e)
+            except Exception as e:
+                st.write("Please upload file")
+        else:
+            st.write("Please provide target variable name")
+    else:
+        st.write("Please Provide a csv file")
