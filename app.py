@@ -120,9 +120,6 @@ elif option == "Example": # This will show the example
     ''')
 elif option == "Try the bias checker":# This is the main page of the app
     
-    st.write("""
-        **Note: Please keep the name of the target value as __y__ **
-    """)
     
 
     st.write("""
@@ -134,6 +131,7 @@ elif option == "Try the bias checker":# This is the main page of the app
     
 
     if multiple_files!=None:
+        text = st.text_input("Please provide name of target variable column")
         if st.button("Submit"):
             try:
                 df_=pd.read_csv(multiple_files)
