@@ -37,7 +37,7 @@ if option == "Instructions": # This will show the first page which shows instruc
 elif option == "Example":
  # This will show the example
     st.write("""
-        ## Below is an demo video.
+        ## Demo video.
     """)
     st.video("streamlit-app-2020-10-29-15-10-89.webm")
     st.write("""
