@@ -134,7 +134,6 @@ elif option == "Try the bias checker":# This is the main page of the app
     
 
     if multiple_files!=None:
-        text = st.text_input("Please provide name of target variable column")
         if st.button("Submit"):
             try:
                 df_=pd.read_csv(multiple_files)
