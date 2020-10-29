@@ -107,7 +107,7 @@ elif option == "Example": # This will show the example
 
 
 
-    df = pd.read_csv("bank-full.csv")
+    df = pd.read_csv("bank.csv")
     st.dataframe(df.style.highlight_max(axis=0))
     with open("df","wb") as f:
         pickle.dump(df,f)
