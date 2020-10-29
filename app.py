@@ -37,7 +37,7 @@ if option == "Instructions": # This will show the first page which shows instruc
 elif option == "Example":
  # This will show the example
     st.write("""
-        ## Below is an demo video.
+        ## Demo video
     """)
     st.video("streamlit-app-2020-10-29-15-10-89.webm")
     st.write("""
@@ -197,7 +197,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                     with open("bias", "rb") as f:
                         bias = pickle.load(f)
                     if(len(bias)==0 or len(percent)==0):
-                        st.markdown('**The dataset does not have any _bias_**')
+                        st.markdown('**We could not find any bias in the dataset**')
                     else:
                         st.markdown('**The _bias_ exists in**')
                         for b in bias:
