@@ -111,7 +111,7 @@ elif option == "Example":
     ''')
     st.write("\n\n\n")
 
-    st.write('''Here is another example with bank customers data. 
+    st.write('''## Here is another example with bank customers data. 
     ''')
     st.write("\n\n")
     df = pd.read_csv("bank.csv")
