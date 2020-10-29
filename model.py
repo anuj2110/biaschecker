@@ -33,8 +33,8 @@ df.columns.values
 our_columns  = np.array(df.columns.values)
 our_columns
 
-corpus = np.char.lower(corpus)
-corpus
+# corpus = np.char.lower(corpus)
+# corpus
 
 common = np.intersect1d(corpus, our_columns)
 common
