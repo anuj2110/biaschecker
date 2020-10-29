@@ -183,7 +183,7 @@ elif option == "Try the bias checker":# This is the main page of the app
 
                     feat_importances = pd.Series(model.feature_importances_, index=x_.columns)
                 
-                    st.header("Feature Importnaces")
+                    st.header("Feature Importance")
                     st.bar_chart(feat_importances)
                     
                 
