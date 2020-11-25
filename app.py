@@ -220,7 +220,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                             st.dataframe(p,500,400)
                         st.header('**Running the gretel synthetic data generator**')
                         st.markdown("**Synthetic dataset produced**")
-                        syn_df_=pd.read_csv('synthetic-data-bank.csv')
+                        syn_df_=pd.read_csv('synthetic-data.csv')
                         syn_df =syn_df_
                         st.dataframe(syn_df.style.highlight_max(axis=0))
                         st.markdown("**click on the below link to see the report for the synthetic data**")
