@@ -225,8 +225,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                         st.dataframe(syn_df.style.highlight_max(axis=0))
                         st.header("**Report**")
                         report_tag="<a>https://anuj2110.github.io/biaschecker/</a>"
-                        if st.button('Open Report'):
-                            webbrowser.open_new_tab(report_tag)
+                        st.markdown(report_tag,_target="blank")
                         os.remove("df")
                         os.remove("bias")
                         os.remove("percent")
