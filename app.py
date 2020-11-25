@@ -12,7 +12,7 @@ from sklearn import preprocessing
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
-
+import webbrowser
 st.title('Bias checker') # App starts here
 
 option = st.sidebar.selectbox("Choose between following",["Instructions","Example","Try the bias checker"]) # * These are the options on the sidebar
@@ -223,10 +223,10 @@ elif option == "Try the bias checker":# This is the main page of the app
                         syn_df_=pd.read_csv('synthetic-data-bank.csv')
                         syn_df =syn_df_
                         st.dataframe(syn_df.style.highlight_max(axis=0))
-                        source_code = HtmlFile.read() 
-                        components.html(source_code)
-                        print(source_code)
-
+                        st.header("**Report**")
+                        report_tag="<a>https://anuj2110.github.io/biaschecker/</a>"
+                        if st.button('Open Report'):
+                            webbrowser.open_new_tab(report_tag)
                         os.remove("df")
                         os.remove("bias")
                         os.remove("percent")
