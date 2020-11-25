@@ -223,7 +223,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                         syn_df_=pd.read_csv('synthetic-data-bank.csv')
                         syn_df =syn_df_
                         st.dataframe(syn_df.style.highlight_max(axis=0))
-                        st.header("**Report**")
+                        st.header("**click on the below link to see the report for the synthetic**")
                         report_tag="<a>https://anuj2110.github.io/biaschecker/</a>"
                         st.markdown(report_tag,unsafe_allow_html=True)
                         os.remove("df")
