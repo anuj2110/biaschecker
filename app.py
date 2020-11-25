@@ -11,6 +11,7 @@ from sklearn.ensemble import ExtraTreesClassifier
 from sklearn import preprocessing
 import seaborn as sns
 import matplotlib.pyplot as plt
+import streamlit.components.v1 as components
 
 st.title('Bias checker') # App starts here
 
@@ -222,6 +223,11 @@ elif option == "Try the bias checker":# This is the main page of the app
                         syn_df_=pd.read_csv('synthetic-data-bank.csv')
                         syn_df =syn_df_
                         st.dataframe(syn_df.style.highlight_max(axis=0))
+                        st.header("report")
+                        HtmlFile = open("report.html", 'r', encoding='utf-8')
+                        source_code = HtmlFile.read() 
+                        components.html(source_code)
+
                         os.remove("df")
                         os.remove("bias")
                         os.remove("percent")
