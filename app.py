@@ -224,7 +224,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                         syn_df =syn_df_
                         st.dataframe(syn_df.style.highlight_max(axis=0))
                         st.markdown("**click on the below link to see the report for the synthetic data**")
-                        report_tag="<a href=https://anuj2110.github.io/biaschecker/ target="_blank">click here</a>"
+                        report_tag="<a href=https://anuj2110.github.io/biaschecker/ target=\"_blank\">click here</a>"
                         st.markdown(report_tag,unsafe_allow_html=True)
                         os.remove("df")
                         os.remove("bias")
