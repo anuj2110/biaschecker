@@ -217,6 +217,13 @@ elif option == "Try the bias checker":# This is the main page of the app
                         st.write('*class distributions*')
                         for p in percent:
                             st.dataframe(p,500,400)
+                        st.markdown('**running the gretel synthetic data generator**')
+                        st.markdown("**synthetic dataset produced**")
+                        try:
+                            syn_df_=pd.read_csv('synthetic-data-bank')
+                            syn_df =syn_df_
+                            st.dataframe(syn_df.style.highlight_max(axis=0))
+
                     os.remove("df")
                     os.remove("bias")
                     os.remove("percent")
