@@ -260,6 +260,9 @@ elif option == "Try the bias checker":# This is the main page of the app
                             st.dataframe(df.style.highlight_max(axis=0))
                             with open("df","wb") as f:
                                 pickle.dump(df,f)
+                            with open("df", "rb") as f:
+	                            temp_df = pickle.load(f)
+                                st.write(temp_df)
                             os.system('python model.py')
 
                                             
