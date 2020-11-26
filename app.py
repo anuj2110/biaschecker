@@ -240,7 +240,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                             st.header(f"Feature Importance wrt '{text}' ")
                             st.bar_chart(feat_importances)
                         except Exception as e:
-                            st.write(e)
+                            st.write("**Something went wrong**")
                         if(agree):
                             st.header('**Running the synthetic data generator**')
                             st.markdown("**Synthetic dataset produced**")
