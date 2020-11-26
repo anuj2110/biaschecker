@@ -317,8 +317,11 @@ elif option == "Try the bias checker":# This is the main page of the app
                                             os.remove("df")
                                             os.remove("bias")
                                             os.remove("percent")
+                                        except Exception as e:
+                                            st.write("something went wrong")
+
                 except Exception as e:
-                    st.write(e)
+                    st.write("something went wrong")
             except Exception as e:
                 st.write("Please upload file")
         else:
