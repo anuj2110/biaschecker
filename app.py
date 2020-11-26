@@ -246,7 +246,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                         except Exception as e:
                             st.write(e)
                         if(agree):
-                            st.header('**Running the gretel synthetic data generator**')
+                            st.header('**Running the synthetic data generator**')
                             st.markdown("**Synthetic dataset produced**")
                             syn_df_=pd.read_csv('synthetic-data.csv')
                             syn_df =syn_df_
