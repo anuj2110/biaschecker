@@ -229,6 +229,8 @@ elif option == "Try the bias checker":# This is the main page of the app
                         text = st.text_input("Do you want to generate synthetic data?")
                         if st.button("Submit"):
                             st.write(text)
+                        else:
+                            st.write("Please provide target variable name")
                         os.remove("df")
                         os.remove("bias")
                         os.remove("percent")
