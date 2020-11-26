@@ -296,29 +296,26 @@ elif option == "Try the bias checker":# This is the main page of the app
                                         st.write("""
                                                 ### Below is the feature importances
                                             """)
-                                        try:
-                                            df=df.dropna()
-                                            label_encoder = preprocessing.LabelEncoder() 
-                                            df=df.apply(preprocessing.LabelEncoder().fit_transform)
-                                            y = df[text].to_numpy()
-                                            collist = df.columns.tolist()
-                                            collist.remove(text)
-                                            x_ = df[collist]
-                                            x = df[collist].to_numpy()
+                                        df=df.dropna()
+                                        label_encoder = preprocessing.LabelEncoder() 
+                                        df=df.apply(preprocessing.LabelEncoder().fit_transform)
+                                        y = df[text].to_numpy()
+                                        collist = df.columns.tolist()
+                                        collist.remove(text)
+                                        x_ = df[collist]
+                                        x = df[collist].to_numpy()
 
-                                            model = ExtraTreesClassifier()
-                                            model.fit(x,y)
+                                        model = ExtraTreesClassifier()
+                                        model.fit(x,y)
 
-                                            feat_importances = pd.Series(model.feature_importances_, index=x_.columns)
+                                        feat_importances = pd.Series(model.feature_importances_, index=x_.columns)
                                         
-                                            st.header(f"Feature Importance wrt '{text}' ")
-                                            st.bar_chart(feat_importances)
+                                        st.header(f"Feature Importance wrt '{text}' ")
+                                        st.bar_chart(feat_importances)
                                             
-                                            os.remove("df")
-                                            os.remove("bias")
-                                            os.remove("percent")
-                                        except Exception as e:
-                                            st.write("something went wrong")
+                                        os.remove("df")
+                                        os.remove("bias")
+                                        os.remove("percent")
                             except Exception as e:
                                 st.write("something went wrong")
 
