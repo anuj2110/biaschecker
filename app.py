@@ -239,10 +239,6 @@ elif option == "Try the bias checker":# This is the main page of the app
                         
                             st.header(f"Feature Importance wrt '{text}' ")
                             st.bar_chart(feat_importances)
-                            
-                            os.remove("df")
-                            os.remove("bias")
-                            os.remove("percent")
                         except Exception as e:
                             st.write(e)
                         if(agree):
@@ -254,48 +250,10 @@ elif option == "Try the bias checker":# This is the main page of the app
                             st.markdown("**click on the below link to see the report for the synthetic data**")
                             report_tag="<a href=https://anuj2110.github.io/biaschecker/ target=\"_blank\">click here</a>"
                             st.markdown(report_tag,unsafe_allow_html=True)
-                            st.header("re running")
-                            df_=pd.read_csv('synthetic-data_new_produced.csv')
-                            df =df_
-                            st.dataframe(df.style.highlight_max(axis=0))
-                            with open("df","wb") as f:
-                                pickle.dump(df,f)
-                            with open("df", "rb") as f:
-	                            temp_df = pickle.load(f)
-                            st.write(temp_df.shape)
-                            os.system('python model.py')
 
-                                            
-                            with open("percent", "rb") as f:
-                                percent= pickle.load(f)
-                                            
-                            with open("bias", "rb") as f:
-                                bias = pickle.load(f)
-                            if(len(bias)==0 or len(percent)==0):
-                                st.markdown('**We could not find any bias in the dataset**')
-                            else:
-                                st.markdown('**The _bias_ exists in**')
-                                for b in bias:
-                                    st.subheader(b)
-                                    temp=type(df[b].iloc[0])
-                                    if(temp!=str):
-                                        st.write('Below is the distribution for this column')
-                                        fig, ax = plt.subplots()
-                                        ax.hist(df[b],facecolor='green', alpha=0.5)
-                                        st.pyplot(fig)
-                                    else:
-                                        cnt=df[b].value_counts().to_frame()
-                                        fig, ax = plt.subplots()
-                                        ax.bar(list(cnt.index),cnt[b],facecolor='green')
-                                        st.pyplot(fig)
-                                        st.write('Bar plot of this column')
-                                st.write('*class distributions*')
-                                for p in percent:
-                                    st.dataframe(p,500,400)
-                            os.remove("df")
-                            os.remove("bias")
-                            os.remove("percent")
-
+                    os.remove("df")
+                    os.remove("bias")
+                    os.remove("percent")        
                 except Exception as e:
                     st.write("something went wrong")
             except Exception as e:
