@@ -248,7 +248,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                         if(agree):
                             st.header('**Running the synthetic data generator**')
                             st.markdown("**Synthetic dataset produced**")
-                            syn_df_=pd.read_csv('synthetic-data.csv')
+                            syn_df_=pd.read_csv('synthetic-data_new_produced.csv')
                             syn_df =syn_df_
                             st.dataframe(syn_df.style.highlight_max(axis=0))
                             st.markdown("**click on the below link to see the report for the synthetic data**")
@@ -256,7 +256,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                             st.markdown(report_tag,unsafe_allow_html=True)
                             st.header("**Rerunning the bias checker on the new data produced after concatenating the original and synthetic data**")
                             try:
-                                new_df=pd.read_csv('synth-plus-orig-data.csv')
+                                new_df=pd.read_csv('synth-plus-orig-data_new_produced.csv')
                                 df =new_df
                                 st.dataframe(df.style.highlight_max(axis=0))
                                 try:
