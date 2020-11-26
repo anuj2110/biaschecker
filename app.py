@@ -227,8 +227,8 @@ elif option == "Try the bias checker":# This is the main page of the app
                         report_tag="<a href=https://anuj2110.github.io/biaschecker/ target=\"_blank\">click here</a>"
                         st.markdown(report_tag,unsafe_allow_html=True)
                         text = st.text_input("Do you want to generate synthetic data?")
-                            if st.button("Submit"):
-                                st.write(text)
+                        if st.button("Submit"):
+                            st.write(text)
                         os.remove("df")
                         os.remove("bias")
                         os.remove("percent")
