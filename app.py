@@ -262,7 +262,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                                 pickle.dump(df,f)
                             with open("df", "rb") as f:
 	                            temp_df = pickle.load(f)
-                                st.write(temp_df.shape)
+                            st.write(temp_df.shape)
                             os.system('python model.py')
 
                                             
