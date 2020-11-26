@@ -264,8 +264,8 @@ elif option == "Try the bias checker":# This is the main page of the app
                                         pickle.dump(df,f)
                                     os.system('python model.py')
                                     with open("df", "rb") as f:
-	                                        temp_df = pickle.load(f)
-                                            st.write(temp_df.shape)
+	                                    temp_df = pickle.load(f)
+                                    st.write(temp_df.shape)
                                                     
                                     with open("percent", "rb") as f:
                                         percent= pickle.load(f)
