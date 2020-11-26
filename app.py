@@ -182,6 +182,7 @@ elif option == "Try the bias checker":# This is the main page of the app
 
     if multiple_files!=None:
         text = st.text_input("Please provide name of target variable column")
+        agree = st.checkbox("Do you want to generate synthetic data in case of bias",value = False)
         if st.button("Submit"):
             try:
                 df_=pd.read_csv(multiple_files)
@@ -218,51 +219,81 @@ elif option == "Try the bias checker":# This is the main page of the app
                         st.write('*class distributions*')
                         for p in percent:
                             st.dataframe(p,500,400)
-                        st.header('**Running the gretel synthetic data generator**')
-                        st.markdown("**Synthetic dataset produced**")
-                        syn_df_=pd.read_csv('synthetic-data.csv')
-                        syn_df =syn_df_
-                        st.dataframe(syn_df.style.highlight_max(axis=0))
-                        st.markdown("**click on the below link to see the report for the synthetic data**")
-                        report_tag="<a href=https://anuj2110.github.io/biaschecker/ target=\"_blank\">click here</a>"
-                        st.markdown(report_tag,unsafe_allow_html=True)
-                        text = st.text_input("Do you want to generate synthetic data?")
-                        if st.button("Submit"):
-                            st.write("xasxa")
-                        else:
-                            st.write("Please provide target variable name")
-                        os.remove("df")
-                        os.remove("bias")
-                        os.remove("percent")
-                
-                    
-                except Exception as e:
-                    st.write("""
-                            Sorry something went wrong on backend. Please retry again with correct inputs
-                        """)
+                        st.write("""
+                                ### Below is the feature importances
+                            """)
+                        try:
+                            df=df.dropna()
+                            label_encoder = preprocessing.LabelEncoder() 
+                            df=df.apply(preprocessing.LabelEncoder().fit_transform)
+                            y = df[text].to_numpy()
+                            collist = df.columns.tolist()
+                            collist.remove(text)
+                            x_ = df[collist]
+                            x = df[collist].to_numpy()
 
-                st.write("""
-                        ### Below is the feature importances
-                    """)
-                try:
-                    df=df.dropna()
-                    label_encoder = preprocessing.LabelEncoder() 
-                    df=df.apply(preprocessing.LabelEncoder().fit_transform)
-                    y = df[text].to_numpy()
-                    collist = df.columns.tolist()
-                    collist.remove(text)
-                    x_ = df[collist]
-                    x = df[collist].to_numpy()
+                            model = ExtraTreesClassifier()
+                            model.fit(x,y)
 
-                    model = ExtraTreesClassifier()
-                    model.fit(x,y)
-
-                    feat_importances = pd.Series(model.feature_importances_, index=x_.columns)
-                
-                    st.header(f"Feature Importance wrt '{text}' ")
-                    st.bar_chart(feat_importances)
-                    
-                
+                            feat_importances = pd.Series(model.feature_importances_, index=x_.columns)
+                        
+                            st.header(f"Feature Importance wrt '{text}' ")
+                            st.bar_chart(feat_importances)
+                            
+                            os.remove("df")
+                            os.remove("bias")
+                            os.remove("percent")
+                        except Exception as e:
+                            st.write(e)
+                        if(agree):
+                            st.header('**Running the gretel synthetic data generator**')
+                            st.markdown("**Synthetic dataset produced**")
+                            syn_df_=pd.read_csv('synthetic-data.csv')
+                            syn_df =syn_df_
+                            st.dataframe(syn_df.style.highlight_max(axis=0))
+                            st.markdown("**click on the below link to see the report for the synthetic data**")
+                            report_tag="<a href=https://anuj2110.github.io/biaschecker/ target=\"_blank\">click here</a>"
+                            st.markdown(report_tag,unsafe_allow_html=True)
+                            st.header("**Rerunning the bias checker on the new data produced after concatenating the original and synthetic data**")
+                            try:
+                                new_df=pd.read_csv('synth-plus-orig-data.csv')
+                                df =new_df
+                                st.dataframe(df.style.highlight_max(axis=0))
+                                try:
+                                    with open("df","wb") as f:
+                                        pickle.dump(df,f)
+                                    os.system('python model.py')
+                                                    
+                                    with open("percent", "rb") as f:
+                                        percent= pickle.load(f)
+                                                    
+                                    with open("bias", "rb") as f:
+                                        bias = pickle.load(f)
+                                    if(len(bias)==0 or len(percent)==0):
+                                        st.markdown('**We could not find any bias in the dataset**')
+                                    else:
+                                        st.markdown('**The _bias_ exists in**')
+                                        for b in bias:
+                                            st.subheader(b)
+                                            temp=type(df[b].iloc[0])
+                                            if(temp!=str):
+                                                st.write('Below is the distribution for this column')
+                                                fig, ax = plt.subplots()
+                                                ax.hist(df[b],facecolor='green', alpha=0.5)
+                                                st.pyplot(fig)
+                                            else:
+                                                cnt=df[b].value_counts().to_frame()
+                                                fig, ax = plt.subplots()
+                                                ax.bar(list(cnt.index),cnt[b],facecolor='green')
+                                                st.pyplot(fig)
+                                                st.write('Bar plot of this column')
+                                        st.write('*class distributions*')
+                                        for p in percent:
+                                            st.dataframe(p,500,400)
+                                except Exception as e:
+                                    st.write("something went wrong")
+                            except Exception as e:
+                                st.write("something went wrong")
                 except Exception as e:
                     st.write(e)
             except Exception as e:
