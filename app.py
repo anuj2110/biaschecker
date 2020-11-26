@@ -228,7 +228,7 @@ elif option == "Try the bias checker":# This is the main page of the app
                         st.markdown(report_tag,unsafe_allow_html=True)
                         text = st.text_input("Do you want to generate synthetic data?")
                         if st.button("Submit"):
-                            st.write(text)
+                            st.write("xasxa")
                         else:
                             st.write("Please provide target variable name")
                         os.remove("df")
